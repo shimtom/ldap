@@ -1,0 +1,42 @@
+version: "3"
+services:
+  openldap:
+    build: ./openldap
+    container_name: openldap
+    env_file: .env
+    expose:
+      - "389"
+      - "636"
+    volumes:
+      - "ldap_data:/var/lib/ldap"
+      - "ldap_config:/etc/ldap/slapd.d"
+      - "${PWD}/ssl:/ssl"
+    restart: always
+
+  lam:
+    build: ./ldap_account_manager
+    container_name: lam
+    depends_on:
+      - openldap
+    links:
+      - openldap:openldap
+    ports:
+      - "8080:80"
+    volumes:
+      - "lam_data:/var/lib/ldap-account-manager"
+    restart: always
+
+  backup:
+    image: busybox
+    command: /bin/sh
+    volumes:
+      - "ldap_data:/var/lib/ldap"
+      - "ldap_config:/etc/ldap/slapd.d"
+      - "lam_data:/var/lib/ldap-account-manager"
+      - "${PWD}/ldap.backup:/backup"
+    tty: true
+
+volumes:
+  ldap_data:
+  ldap_config:
+  lam_data:
