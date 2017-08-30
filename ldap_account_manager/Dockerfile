@@ -1,6 +1,6 @@
 FROM ubuntu:14.04
 
-MAINTAINER Tomoshige Shimomura
+MAINTAINER shimtom
 
 EXPOSE 80
 

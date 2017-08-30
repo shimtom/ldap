@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 
-MAINTAINER Tomoshige Shimomura
+MAINTAINER shimtom
 
 # 389: LDAP (unsecured or TLS-secured using STARTTLS)
 # 636: LDAP (secured using TLS)
