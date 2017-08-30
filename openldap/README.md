@@ -14,7 +14,7 @@
     - `ENV LDAP_ORGANIZATION`
         default: Example
     - `ENV LDAP_ADMIN_PASSWORD`
-        default: admin
+        default: password
     - `ENV LDAP_LOG_LEVEL`
         default: 256
 

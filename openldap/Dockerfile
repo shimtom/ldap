@@ -9,7 +9,7 @@ EXPOSE 636
 
 ENV LDAP_DOMAIN=example.com
 ENV LDAP_ORGANIZATION=Example
-ENV LDAP_ADMIN_PASSWORD=admin
+ENV LDAP_ADMIN_PASSWORD=password
 ENV LDAP_LOG_LEVEL=${LDAP_LOG_LEVEL:-256}
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
