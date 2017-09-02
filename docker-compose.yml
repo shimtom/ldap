@@ -7,6 +7,9 @@ services:
     expose:
       - "389"
       - "636"
+    ports:
+      - "389:389"
+      - "636:636"
     volumes:
       - "ldap_data:/var/lib/ldap"
       - "ldap_config:/etc/ldap/slapd.d"
@@ -35,6 +38,7 @@ services:
       - "lam_data:/var/lib/ldap-account-manager"
       - "${PWD}/ldap.backup:/backup"
     tty: true
+    restart: always
 
 volumes:
   ldap_data:
