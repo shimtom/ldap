@@ -11,6 +11,7 @@ ENV LDAP_DOMAIN=example.com
 ENV LDAP_ORGANIZATION=Example
 ENV LDAP_ADMIN_PASSWORD=password
 ENV LDAP_LOG_LEVEL=${LDAP_LOG_LEVEL:-256}
+ENV LDAP_BACKUP_TTL=15
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         slapd \
@@ -23,13 +24,13 @@ RUN mkdir /ssl
 RUN chmod o= /ssl
 RUN chgrp openldap /ssl
 
+ADD backup.sh /usr/local/bin
+ADD restore.sh /usr/local/bin
+ADD run.sh /usr/local/bin
 
-ADD run.sh /run.sh
-CMD /run.sh
+CMD /usr/local/bin/run.sh
 
-# LDAP database files
-VOLUME ["/var/lib/ldap"]
-# LDAP config files
-VOLUME ["/etc/ldap/slapd.d"]
+# LDAP backup directory
+VOLUME ["/ldap_data"]
 # SSL certificate files
 VOLUME ["/ssl"]
