@@ -11,8 +11,7 @@ services:
       - "389:389"
       - "636:636"
     volumes:
-      - "ldap_data:/var/lib/ldap"
-      - "ldap_config:/etc/ldap/slapd.d"
+      - "ldap_data:/ldap_data"
       - "${PWD}/ssl:/ssl"
     restart: always
 
@@ -32,9 +31,9 @@ services:
   backup:
     image: busybox
     command: /bin/sh
+    container_name: ldap_backup
     volumes:
-      - "ldap_data:/var/lib/ldap"
-      - "ldap_config:/etc/ldap/slapd.d"
+      - "ldap_data:/ldap_data"
       - "lam_data:/var/lib/ldap-account-manager"
       - "${PWD}/ldap.backup:/backup"
     tty: true
@@ -42,5 +41,4 @@ services:
 
 volumes:
   ldap_data:
-  ldap_config:
   lam_data:
