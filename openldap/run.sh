@@ -35,8 +35,7 @@ EOF
 function start() {
     # slapdを起動する.
     status "Start slapd"
-    /usr/sbin/slapd -h "ldap:/// ldapi:///" -g openldap -u openldap -F /etc/ldap/slapd.d -d ${LDAP_LOG_LEVEL}
-
+    /usr/sbin/slapd -h "ldap:/// ldapi:/// ldaps:///" -g openldap -u openldap -F /etc/ldap/slapd.d -d ${LDAP_LOG_LEVEL}
 }
 
 function startbg() {
@@ -91,30 +90,32 @@ function set_certificates() {
     # SSL サーバー証明書の確認
     status "Check certificates ..."
 
-    if test -e /ssl/${LDAP_DOMAIN}-ca.crt \
-         -a -e /ssl/${LDAP_DOMAIN}.key \
-         -a -e /ssl/${LDAP_DOMAIN}.pem; then
+    if test -e /ssl/${TLS_CACERTIFICATE_FILE} \
+         -a -e /ssl/${TLS_CERRIFICATE_KEY_FILE} \
+         -a -e /ssl/${TLS_CERRIFICATE_FILE}; then
         status "found"
         status "Setting certificates"
         chmod o= /ssl
         chgrp openldap /ssl
+
         ldapmodify -Y external -H ldapi:/// > /dev/null <<EOF
 dn: cn=config
+changetype: modify
 add: olcTLSCACertificateFile
-olcTLSCACertificateFile: /ssl/${LDAP_DOMAIN}-ca.crt
+olcTLSCACertificateFile: /ssl/${TLS_CACERTIFICATE_FILE}
 -
 add: olcTLSCertificateKeyFile
-olcTLSCertificateKeyFile: /ssl/${LDAP_DOMAIN}.key
+olcTLSCertificateKeyFile: /ssl/${TLS_CERRIFICATE_KEY_FILE}
 -
 add: olcTLSCertificateFile
-olcTLSCertificateFile: /ssl/${LDAP_DOMAIN}.pem
+olcTLSCertificateFile: /ssl/${TLS_CERRIFICATE_FILE}
 EOF
     else
         status "no"
         echo "     to activate TLS/SSL, please install:"
-        echo "       - /ssl/${LDAP_DOMAIN}-ca.crt"
-        echo "       - /ssl/${LDAP_DOMAIN}.key"
-        echo "       - /ssl/${LDAP_DOMAIN}.pem"
+        echo "       - /ssl/${TLS_CACERTIFICATE_FILE}"
+        echo "       - /ssl/${TLS_CERRIFICATE_KEY_FILE}"
+        echo "       - /ssl/${TLS_CERRIFICATE_FILE}"
     fi
 }
 
@@ -147,6 +148,7 @@ startbg
 check_config
 # cn=configのパスワードを設定
 set_config_password
+check_config
 # サーバー証明書の設定
 set_certificates
 # anonymous bindの禁止
