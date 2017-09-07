@@ -14,6 +14,8 @@ direpath=$1
 
 service slapd stop
 rm -rf /etc/ldap/slapd.d
+mkdir -p /etc/ldap/slapd.d
+chown openldap:openldap
 restore 0 "$direpath"/config.ldif
 restore 1 "$direpath"/data.ldif
 
