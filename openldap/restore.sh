@@ -13,10 +13,17 @@ function restore() {
 direpath=$1
 
 service slapd stop
+
+# restore config
 rm -rf /etc/ldap/slapd.d
 mkdir -p /etc/ldap/slapd.d
 chown openldap:openldap /etc/ldap/slapd.d
 restore 0 "$direpath"/config.ldif
+
+# restore data
+rm -rf /var/lib/ldap
+mkdir -p /var/lib/ldap
+chown openldap:openldap /var/lib/ldap
 restore 1 "$direpath"/data.ldif
 
 service slapd start
