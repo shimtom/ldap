@@ -7,6 +7,10 @@ services:
     expose:
       - "389"
       - "636"
+    logging:
+      driver: syslog
+      options:
+        tag: "{{.Name}}"
     ports:
       - "389:389"
       - "636:636"
@@ -22,6 +26,10 @@ services:
       - openldap
     links:
       - openldap:openldap
+    logging:
+      driver: syslog
+      options:
+        tag: "{{.Name}}"
     ports:
       - "8080:80"
     volumes:
