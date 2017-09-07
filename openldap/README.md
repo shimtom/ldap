@@ -29,7 +29,7 @@ $ docker run -d --name openldap shimtom/openldap:latest
 ```
 $ docker exec openldap /usr/local/bin/backup.sh
 ```
-データは`/ldap_data/%Y%m%dT%H%M%S`に保存される.また、`LDAP_BACKUP_TTL`で指定した日数が経過すると、次回バックアップ時にそのファイルは削除される.
+データは`/ldap_data/%Y%m%dT%H%M%S`に保存される.また,`LDAP_BACKUP_TTL`で指定した日数が経過すると,次回バックアップ時にそのファイルは削除される.
 
 ### restore
 ```

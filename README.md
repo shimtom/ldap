@@ -5,7 +5,7 @@
     ```
     $ cd /path/to/ldap
     ```
-2. `.env` ファイルを作成し、環境変数を記述する.
+2. `.env` ファイルを作成し,環境変数を記述する.
     使用できる環境変数は以下の通り.
     - `LDAP_DOMAIN`: ドメイン名. (default: example.com)
     - `LDAP_ORGANIZATION`: 組織名. (default: Example.com)
@@ -25,7 +25,7 @@
     $ docker-compose up
     ```
     http://localhost:8080 で起動する.
-    また、ldap account managerのデフォルトパスワードは`lam`となっている.
+    また,ldap account managerのデフォルトパスワードは`lam`となっている.
 
 * Note: その他の変更を行いたい場合は`docker-compose.yml`を編集する.
 
@@ -46,4 +46,4 @@ $ docker exec ldap_backup tar xvf /backup/lam_data.tar
 `%Y%m%dT%H%M%S`はディレクトリ名に変更する.
 
 ## TLS/SSL
-`TLS_CACERTIFICATE_FILE`,`TLS_CERRIFICATE_KEY_FILE`,`TLS_CERRIFICATE_FILE`で指定したCA証明書、サーバー秘密鍵、サーバー証明書を,`./ssl/`ディレクトリ以下に用意すれば、SSL通信が可能となる.ただし、
+`TLS_CACERTIFICATE_FILE`,`TLS_CERRIFICATE_KEY_FILE`,`TLS_CERRIFICATE_FILE`で指定したCA証明書,サーバー秘密鍵,サーバー証明書を,`./ssl/`ディレクトリ以下に用意すれば,SSL通信が可能となる.ただし,
