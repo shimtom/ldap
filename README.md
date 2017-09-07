@@ -47,3 +47,9 @@ $ docker exec ldap_backup tar xvf /backup/lam_data.tar
 
 ## TLS/SSL
 `TLS_CACERTIFICATE_FILE`,`TLS_CERTIFICATE_KEY_FILE`,`TLS_CERTIFICATE_FILE`で指定したCA証明書,サーバー秘密鍵,サーバー証明書を,`./ssl/`ディレクトリ以下に用意すれば,SSL通信が可能となる.ただし,
+
+## Trouble Shooting
+### SSL接続が上手くいかない場合
+1. ldap account managerのサーバーアドレスが`ldaps://`で開始されているかを確認する.
+2. 発行したサーバー証明書のurlとldap account managerで指定したldapサーバーのurlが一致していることを確認する.
+3. 自己署名の場合、ldap account managerの`一般設定を更新`でSSL証明書をサーバーからインポートしていることを確認する.
