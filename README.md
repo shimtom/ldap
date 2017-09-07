@@ -30,19 +30,26 @@
 * Note: その他の変更を行いたい場合は`docker-compose.yml`を編集する.
 
 ## Backup
-```
-$ docker exec openldap /usr/local/bin/backup.sh
-$ docker exec ldap_backup tar cvf /backup/ldap_data.tar /ldap_data
-$ docker exec ldap_backup tar cvf /backup/lam_data.tar /var/lib/ldap-account-manager
-```
+* コマンド
+    ```
+    $ docker exec openldap /usr/local/bin/backup.sh
+    $ docker exec ldap_backup tar cvf /backup/ldap_data.tar /ldap_data
+    $ docker exec ldap_backup tar cvf /backup/lam_data.tar /var/lib/ldap-account-manager
+    ```
+* backup with cron
+    ```
+    $ sudo sh -c "echo '* 4 * * * root docker exec openldap /usr/local/bin/backup.sh && docker exec ldap_backup tar cvf /backup/ldap_data.tar /ldap_data' >> /etc/crontab"
+    $ sudo sh -c "echo '* 4 * * * root docker exec ldap_backup tar cvf /backup/lam_data.tar /var/lib/ldap-account-manager' >> /etc/crontab"
+    ```
+    04:00 a.m.にバックアップが行われる.
 
 ## Restore
+
 ```
 $ docker exec ldap_backup tar xvf /backup/ldap_data.tar
 $ docker exec openldap /usr/local/bin/restore.sh /ldap_data/%Y%m%dT%H%M%S
 $ docker exec ldap_backup tar xvf /backup/lam_data.tar
 ```
-
 `%Y%m%dT%H%M%S`はディレクトリ名に変更する.
 
 ## TLS/SSL
