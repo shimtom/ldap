@@ -105,17 +105,17 @@ add: olcTLSCACertificateFile
 olcTLSCACertificateFile: /ssl/${TLS_CACERTIFICATE_FILE}
 -
 add: olcTLSCertificateKeyFile
-olcTLSCertificateKeyFile: /ssl/${TLS_CERRIFICATE_KEY_FILE}
+olcTLSCertificateKeyFile: /ssl/${TLS_CERTIFICATE_KEY_FILE}
 -
 add: olcTLSCertificateFile
-olcTLSCertificateFile: /ssl/${TLS_CERRIFICATE_FILE}
+olcTLSCertificateFile: /ssl/${TLS_CERTIFICATE_FILE}
 EOF
     else
         status "no"
         echo "     to activate TLS/SSL, please install:"
         echo "       - /ssl/${TLS_CACERTIFICATE_FILE}"
-        echo "       - /ssl/${TLS_CERRIFICATE_KEY_FILE}"
-        echo "       - /ssl/${TLS_CERRIFICATE_FILE}"
+        echo "       - /ssl/${TLS_CERTIFICATE_KEY_FILE}"
+        echo "       - /ssl/${TLS_CERTIFICATE_FILE}"
     fi
 }
 
