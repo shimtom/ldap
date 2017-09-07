@@ -22,8 +22,8 @@ $ docker run -d --name openldap shimtom/openldap:latest
     - `LDAP_LOG_LEVEL`: LDAPサーバーのログレベル. (default: 256)
     - `LDAP_BACKUP_TTL`: バックアップを実行した際にこの日数以前のバックアップファイルは削除される. (default: 15)
     - `TLS_CACERTIFICATE_FILE`: sslに使用するCA証明書のファイル名.このファイルは`/ssl`以下に存在する場合に有効. (default: ${LDAP_DOMAIN}-ca.pem)
-    - `TLS_CERRIFICATE_KEY_FILE`: sslに使用するサーバー証明書の秘密鍵のファイル名.このファイルは`/ssl`以下に存在する場合に有効. (default: ${LDAP_DOMAIN}.key)
-    - `TLS_CERRIFICATE_FILE`: sslに使用するサーバー証明書のファイル名.このファイルは`/ssl`以下に存在する場合に有効. (default: ${LDAP_DOMAIN}.crt)
+    - `TLS_CERTIFICATE_KEY_FILE`: sslに使用するサーバー証明書の秘密鍵のファイル名.このファイルは`/ssl`以下に存在する場合に有効. (default: ${LDAP_DOMAIN}.key)
+    - `TLS_CERTIFICATE_FILE`: sslに使用するサーバー証明書のファイル名.このファイルは`/ssl`以下に存在する場合に有効. (default: ${LDAP_DOMAIN}.crt)
 
 ### backup
 ```

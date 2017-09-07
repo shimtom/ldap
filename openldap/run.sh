@@ -91,8 +91,8 @@ function set_certificates() {
     status "Check certificates ..."
 
     if test -e /ssl/${TLS_CACERTIFICATE_FILE} \
-         -a -e /ssl/${TLS_CERRIFICATE_KEY_FILE} \
-         -a -e /ssl/${TLS_CERRIFICATE_FILE}; then
+         -a -e /ssl/${TLS_CERTIFICATE_KEY_FILE} \
+         -a -e /ssl/${TLS_CERTIFICATE_FILE}; then
         status "found"
         status "Setting certificates"
         chmod o= /ssl
