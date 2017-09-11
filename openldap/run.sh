@@ -112,10 +112,10 @@ olcTLSCertificateFile: /ssl/${TLS_CERTIFICATE_FILE}
 EOF
     else
         status "no"
-        echo "     to activate TLS/SSL, please install:"
-        echo "       - /ssl/${TLS_CACERTIFICATE_FILE}"
-        echo "       - /ssl/${TLS_CERTIFICATE_KEY_FILE}"
-        echo "       - /ssl/${TLS_CERTIFICATE_FILE}"
+        status "to activate TLS/SSL, please install:"
+        status "  - /ssl/${TLS_CACERTIFICATE_FILE}"
+        status "  - /ssl/${TLS_CERTIFICATE_KEY_FILE}"
+        status "  - /ssl/${TLS_CERTIFICATE_FILE}"
     fi
 }
 
@@ -135,7 +135,44 @@ olcRequires: authc
 EOF
 }
 
+function restore() {
+    dbnumber=$1
+    filepath=$2
 
+    /usr/sbin/slapadd -c -F /etc/ldap/slapd.d -n $dbnumber -l $filepath
+}
+
+function check_backedup_config() {
+    status "Check backed up config ..."
+    if test -e /ldap_data/${LDAP_CONFIG_FILE}; then
+        status "found"
+        status "Restore ldap config"
+        rm -rf /etc/ldap/slapd.d
+        mkdir /etc/ldap/slapd.d
+        restore 0 /ldap_data/${LDAP_CONFIG_FILE}
+        chown -R openldap:openldap /etc/ldap/slapd.d
+    else
+        status "no"
+        status "to restore ldap config, please install:"
+        status "  - /ldap_data/${LDAP_CONFIG_FILE}"
+    fi
+}
+
+function check_backuped_data() {
+    status "Check backed up config ..."
+    if test -e /ldap_data/${LDAP_DATA_FILE}; then
+        status "found"
+        status "Restore ldap data"
+        rm -rf /var/lib/ldap
+        mkdir /var/lib/ldap
+        restore 1 /ldap_data/${LDAP_DATA_FILE}
+        chown -R openldap:openldap /var/lib/ldap
+    else
+        status "no"
+        status "to restore ldap data, please install:"
+        status "  - /ldap_data/${LDAP_CONFIG_FILE}"
+    fi
+}
 
 status "Configuration"
 # 必要なディレクトリの権限を修正
@@ -155,10 +192,11 @@ set_certificates
 disallow_anonymous_bind
 # slapd を一時中断
 stopbg
+check_backedup_config
+check_backuped_data
 status "Configuration done."
 
-# start
-
+# start foreground
 status "Starting slapd ..."
 status "Administrator Password: ${LDAP_ADMIN_PASSWORD}"
 start
