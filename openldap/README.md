@@ -24,6 +24,8 @@ $ docker run -d --name openldap shimtom/openldap:latest
     - `TLS_CACERTIFICATE_FILE`: sslに使用するCA証明書のファイル名.このファイルは`/ssl`以下に存在する場合に有効. (default: ${LDAP_DOMAIN}-ca.pem)
     - `TLS_CERTIFICATE_KEY_FILE`: sslに使用するサーバー証明書の秘密鍵のファイル名.このファイルは`/ssl`以下に存在する場合に有効. (default: ${LDAP_DOMAIN}.key)
     - `TLS_CERTIFICATE_FILE`: sslに使用するサーバー証明書のファイル名.このファイルは`/ssl`以下に存在する場合に有効. (default: ${LDAP_DOMAIN}.crt)
+    - `LDAP_CONFIG_FILE`: /ldap_data/${LDAP_CONFIG_FILE} が存在する場合にopenldapサーバーの設定ファイルとして読み込む. (default: config.ldif)
+    - LDAP_DATA_FILE: /ldap_data/${LDAP_DATA_FILE} が存在する場合にopenldapサーバーのデータとして読み込む. (default: data.ldif)
 
 ### backup
 ```
@@ -33,5 +35,5 @@ $ docker exec openldap /usr/local/bin/backup.sh
 
 ### restore
 ```
-$ docker exec openldap /usr/local/bin/restore.sh /ldap_data/%Y%m%dT%H%M%S
+$ docker run -d --name openldap -e LDAP_CONFIG_FILE=config.ldif -e LDAP_CONFIG_FILE=data.ldif -v ./ldap_data:/ldap_data shimtom/openldap:latest
 ```
