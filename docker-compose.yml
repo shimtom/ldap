@@ -3,14 +3,15 @@ services:
   openldap:
     build: ./openldap
     container_name: openldap
+    depends_on:
+      - backup
     env_file: .env
+    environment:
+      - LDAP_CONFIG_FILE=config.ldif
+      - LDAP_DATA_FILE=data.ldif
     expose:
       - "389"
       - "636"
-    logging:
-      driver: syslog
-      options:
-        tag: "{{.Name}}"
     ports:
       - "389:389"
       - "636:636"
@@ -26,10 +27,6 @@ services:
       - openldap
     links:
       - openldap:openldap
-    logging:
-      driver: syslog
-      options:
-        tag: "{{.Name}}"
     ports:
       - "8080:80"
     volumes:
@@ -37,8 +34,7 @@ services:
     restart: always
 
   backup:
-    image: busybox
-    command: /bin/sh
+    build: ./ldap_backup
     container_name: ldap_backup
     volumes:
       - "ldap_data:/ldap_data"
