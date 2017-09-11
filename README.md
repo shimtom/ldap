@@ -64,7 +64,7 @@
     ```
 
 ## TLS/SSL
-`TLS_CACERTIFICATE_FILE`,`TLS_CERTIFICATE_KEY_FILE`,`TLS_CERTIFICATE_FILE`で指定したCA証明書,サーバー秘密鍵,サーバー証明書を,`./ssl/`ディレクトリ以下に用意すれば,SSL通信が可能となる.ただし,
+`TLS_CACERTIFICATE_FILE`,`TLS_CERTIFICATE_KEY_FILE`,`TLS_CERTIFICATE_FILE`で指定したCA証明書,サーバー秘密鍵,サーバー証明書を,`./ssl/`ディレクトリ以下に用意すれば,SSL通信が可能となる.
 
 ## Trouble Shooting
 ### SSL接続が上手くいかない場合
