@@ -32,8 +32,10 @@
 ## Backup
 * コマンド
     ```
+    # backup openldap
     $ docker exec openldap /usr/local/bin/backup.sh
     $ docker exec ldap_backup tar cvf /backup/ldap_data.tar /ldap_data
+    # backup ldap account manager
     $ docker exec ldap_backup tar cvf /backup/lam_data.tar /var/lib/ldap-account-manager
     ```
 * backup with cron
@@ -44,13 +46,22 @@
     04:00 a.m.にバックアップが行われる.
 
 ## Restore
+1. clean up existing containers
+    ```
+    $ docker-compose stop
+    $ docker-compose rm
+    ```
+2. edit `docker-compose.yml` and set `LDAP_CONFIG_FILE` and `LDAP_DATA_FILE`
+3. start containers
+    ```
+    $ docker-compose up
+    ```
+    * Note: container内で`/ldap_data/${LDAP_CONFIG_FILE}`,`/ldap_data/${LDAP_DATA_FILE}`が存在する場合にopenldapサーバーのリストアが有効となる.
 
-```
-$ docker exec ldap_backup tar xvf /backup/ldap_data.tar
-$ docker exec openldap /usr/local/bin/restore.sh /ldap_data/%Y%m%dT%H%M%S
-$ docker exec ldap_backup tar xvf /backup/lam_data.tar
-```
-`%Y%m%dT%H%M%S`はディレクトリ名に変更する.
+4. restore lam data
+    ```
+    $ docker exec ldap_backup tar xvf /backup/lam_data.tar
+    ```
 
 ## TLS/SSL
 `TLS_CACERTIFICATE_FILE`,`TLS_CERTIFICATE_KEY_FILE`,`TLS_CERTIFICATE_FILE`で指定したCA証明書,サーバー秘密鍵,サーバー証明書を,`./ssl/`ディレクトリ以下に用意すれば,SSL通信が可能となる.ただし,
