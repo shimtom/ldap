@@ -40,8 +40,8 @@
     ```
 * backup with cron
     ```
-    $ sudo sh -c "echo '* 4 * * * root docker exec openldap /usr/local/bin/backup.sh && docker exec ldap_backup tar cvf /backup/ldap_data.tar /ldap_data' >> /etc/crontab"
-    $ sudo sh -c "echo '* 4 * * * root docker exec ldap_backup tar cvf /backup/lam_data.tar /var/lib/ldap-account-manager' >> /etc/crontab"
+    $ sudo sh -c "echo '0 4 * * * root docker exec openldap /usr/local/bin/backup.sh && docker exec ldap_backup tar cvf /backup/ldap_data.tar /ldap_data' >> /etc/crontab"
+    $ sudo sh -c "echo '0 4 * * * root docker exec ldap_backup tar cvf /backup/lam_data.tar /var/lib/ldap-account-manager' >> /etc/crontab"
     ```
     04:00 a.m.にバックアップが行われる.
 
